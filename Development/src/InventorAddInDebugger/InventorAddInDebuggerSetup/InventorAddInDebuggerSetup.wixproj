@@ -1,0 +1,31 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.1">
+	<ItemGroup>
+		<ProjectReference Include="..\AddInInfo48\AddInInfo48.csproj" />
+		<ProjectReference Include="..\AddInInfo80\AddInInfo80.csproj" />
+		<ProjectReference Include="..\InventorAddInDebugger\InventorAddInDebugger.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="Binary\AttachDebuggerCmd_Dark.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="WixToolset.UI.wixext" Version="5.0.1" />
+		<PackageReference Include="WixToolset.Util.wixext" Version="5.0.1" />
+	</ItemGroup>
+
+	<Target Name="RenameMsi" AfterTargets="AfterBuild">
+		<Message Text="RenameMsi:" Importance="high" />
+		<!-- Get the assembly version from the .dll file -->
+		<GetAssemblyIdentity AssemblyFiles="..\InventorAddInDebugger\bin\$(Configuration)\InventorAddInDebugger.dll">
+			<Output TaskParameter="Assemblies" ItemName="AsmInfo" />
+		</GetAssemblyIdentity>
+		<!--<Message Text="AsmInfo.Version: %(AsmInfo.Version)" Importance="high" />-->
+
+		<CreateProperty Value="$(TargetName)_%(AsmInfo.Version).msi">
+			<Output TaskParameter="Value" PropertyName="MsiFileName" />
+		</CreateProperty>
+		<Message Text="MsiFileName: $(MsiFileName)" Importance="high" />
+		
+		<Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(MsiFileName)" />
+		<Delete Files="$(TargetPath)" />
+	</Target>
+</Project>

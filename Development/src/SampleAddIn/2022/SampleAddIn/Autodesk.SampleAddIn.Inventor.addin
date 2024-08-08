@@ -1,0 +1,14 @@
+<Addin Type="Standard">
+  <!--Created for Autodesk Inventor Version 28.0-->
+  <ClassId>{905d9707-d4cd-43dd-b6ed-9fd34c48893f}</ClassId>
+  <ClientId>{905d9707-d4cd-43dd-b6ed-9fd34c48893f}</ClientId>
+  <DisplayName>SampleAddIn</DisplayName>
+  <Description>SampleAddIn</Description>
+  <Assembly>SampleAddIn.dll</Assembly>
+  <LoadOnStartUp>1</LoadOnStartUp>
+  <UserUnloadable>1</UserUnloadable>
+  <Hidden>0</Hidden>
+  <SupportedSoftwareVersionGreaterThan>27..</SupportedSoftwareVersionGreaterThan>
+  <DataVersion>1</DataVersion>
+  <UserInterfaceVersion>1</UserInterfaceVersion>
+</Addin>

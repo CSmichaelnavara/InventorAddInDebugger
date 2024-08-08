@@ -1,0 +1,99 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+	<!-- ________________________________________ -->
+	<!--|                                        |-->
+	<!--|        Installer Configuration         |-->
+	<!--|                                        |-->
+
+	<!-- Product name as you want it to appear in Add/Remove Programs-->
+	<!--TODO: Replace ADD_REMOVE_PROGRAMS_NAME with display name as you want it to appear in Add/Remove Programs-->
+	<?define ProductName = "Inventor AddIn Debugger" ?>
+
+	<!-- AddIn Name - Name of the installed addin main DLL-->
+	<!--TODO: Replace MAIN_ADDIN_FILE_WITHOUT_EXTENSION with referenced project main dll name (without extension)-->
+	<?define MainAddinFile = "InventorAddInDebugger" ?>
+
+	<!--Installed product output folder-->
+	<!--TODO: Replace REFERENCED_PROJECT_NAME with name of the referenced installed project-->
+	<?define targetDir = $(var.InventorAddInDebugger.TargetDir)?>
+	<?define addInInfo48TargetDir = $(var.AddInInfo48.TargetDir)?>
+	<?define addInInfo80TargetDir = $(var.AddInInfo80.ProjectDir)bin\Release\net8.0\publish\?>
+
+	<!--|                                        |-->
+	<!--|     End of Installer Configuration     |-->
+	<!--|________________________________________|-->
+
+	<!--Upgrade code-->
+	<?define UpgradeCode = "{1481224E-27A7-4141-8B44-F86FC64029FB}" ?>
+
+	<!--Version - Can be replaced with fixed string i.e. 1.0.0.0-->
+	<?define Version = "!(bind.fileVersion.$(var.MainAddinFile).dll)" ?>
+	<Package UpgradeCode="$(var.UpgradeCode)" Name="$(var.ProductName)" Version="$(var.Version)" Manufacturer="Michael Navara" Language="1033" Codepage="1250" InstallerVersion="200">
+
+		<SummaryInformation Codepage="1250" />
+
+		<Media Id="1" Cabinet="AddIn.cab" CompressionLevel="mszip" EmbedCab="yes" />
+
+		<!--Uninstall older versions-->
+		<Upgrade Id="$(var.UpgradeCode)">
+			<UpgradeVersion Minimum="$(var.Version)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+			<UpgradeVersion Minimum="0.0.0.0" Maximum="$(var.Version)" IncludeMinimum="yes" IncludeMaximum="yes" Property="OLDERVERSIONBEINGUPGRADED" />
+		</Upgrade>
+
+		<InstallExecuteSequence>
+			<RemoveExistingProducts After="InstallInitialize" />
+			<Custom Action="NewerVersion" After="FindRelatedProducts" Condition="NEWERVERSIONDETECTED" />
+		</InstallExecuteSequence>
+
+		<CustomAction Id="NewerVersion" Error="A later version of [ProductName] is already installed." />
+
+		<!--Installed components and features-->
+		<Feature Id="ProductFeature" Title="InventorAddInDebugger" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+
+		<!--User interface-->
+		<!--<ui:WixUI Id="WixUI_Minimal" />-->
+		<ui:WixUI Id="MinimalUI" />
+				
+	</Package>
+
+
+	<Fragment>
+		<!--Folder structure-->
+		<!--INSTALLFOLDER-->
+		<StandardDirectory Id="CommonAppDataFolder">
+			<Directory Id="ManufacturerFolder" Name="Autodesk">
+				<Directory Id="ApplicationPluginsFolder" Name="ApplicationPlugins">
+					<Directory Id="INSTALLFOLDER" Name="$(var.MainAddinFile).bundle">
+
+					</Directory>
+				</Directory>
+			</Directory>
+		</StandardDirectory>
+
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents">
+
+			<!--AddIn files-->
+			<Component Id="$(var.MainAddinFile).dll" Directory="INSTALLFOLDER">
+				<File Id="$(var.MainAddinFile).dll" Source="$(var.targetDir)$(var.MainAddinFile).dll" />
+			</Component>
+
+			<!--AddIn registration manifest-->
+			<Component Id="AddInLoaderAll" Directory="INSTALLFOLDER">
+				<File Id="ADDINFILEALL" Source="$(var.targetDir)InventorAddInDebugger.addin" />
+			</Component>
+
+			<Component Id="AddInInfo48.exe" Directory="INSTALLFOLDER">
+				<File Id="AddInInfo48.exe" Source="$(var.addInInfo48TargetDir)AddInInfo48.exe" />
+			</Component>
+			<Component Id="AddInInfo80.exe" Directory="INSTALLFOLDER">
+				<File Id="AddInInfo80.exe" Source="$(var.addInInfo80TargetDir)AddInInfo80.exe" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+</Wix>
