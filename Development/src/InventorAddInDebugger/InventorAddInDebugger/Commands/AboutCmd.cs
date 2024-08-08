@@ -15,7 +15,7 @@ namespace MiNa.InventorAddInDebugger.Commands
 
         protected override void ExecuteCommand(NameValueMap context)
         {
-            string link = "<a href=\"https://github.com/CSmichaelnavara\">Project page</a>";
+            string link = "<a href=\"https://github.com/CSmichaelnavara/InventorAddInDebugger\">Project page</a>";
             string message=$@"<p>
 <p>{Resources.AddIn_DisplayName}</p>
 <p>Version: {Assembly.GetExecutingAssembly().GetName().Version}</p>
