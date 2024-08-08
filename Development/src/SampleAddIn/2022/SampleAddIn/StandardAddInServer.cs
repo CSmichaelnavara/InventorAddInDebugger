@@ -36,9 +36,13 @@ namespace SampleAddIn
 
             // TODO: Add ApplicationAddInServer.Activate implementation.
             // e.g. event initialization, command creation etc.
+            // Create message
+            string message = "Sample AddIn";
 
-            string message = $"{SampleAddIn.Info.GetMessage}\r\n{SampleAddInModule.Info.GetMessage}";
+            // Append version
+            message += $"\r\n{Info.GetMessage}\r\n{SampleAddInModule.Info.GetMessage}";
             MessageBox.Show(message, "Activate");
+
         }
 
         public void Deactivate()
@@ -49,7 +53,11 @@ namespace SampleAddIn
 
             // TODO: Add ApplicationAddInServer.Deactivate implementation
 
-            string message = $"{SampleAddIn.Info.GetMessage}\r\n{SampleAddInModule.Info.GetMessage}";
+            // Create message
+            string message = "Sample AddIn";
+
+            // Append version
+            message += $"\r\n{Info.GetMessage}\r\n{SampleAddInModule.Info.GetMessage}";
             MessageBox.Show(message, "Deactivate");
 
             // Release objects.
