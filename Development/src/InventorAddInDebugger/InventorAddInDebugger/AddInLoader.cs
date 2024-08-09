@@ -139,7 +139,11 @@ namespace MiNa.InventorAddInDebugger
             foreach (var definedType in addInAssembly.DefinedTypes)
             {
                 // Type must implement Inventor.ApplicationAddInServer
-                if (!definedType.ImplementedInterfaces.Contains(typeof(ApplicationAddInServer)))
+                var implementedInterfaces = definedType.ImplementedInterfaces;
+
+                // FullName comparison is necessary.
+                string applicationAddInServerFullName = "Inventor.ApplicationAddInServer";
+                if (implementedInterfaces.All(x => x.FullName != applicationAddInServerFullName))
                     continue;
 
                 // Type must contain GuidAttribute with value equal to AddInClientId
