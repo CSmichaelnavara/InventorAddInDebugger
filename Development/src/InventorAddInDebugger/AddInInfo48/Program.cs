@@ -15,12 +15,16 @@ namespace MiNa.AddInInfo48
 
             // Check the arguments
             if (args == null || args.Length == 0)
-                return;
+            {
+                Console.WriteLine("Arguments can't be empty.");
+                Environment.Exit((int)ExitCodes.FileNotFound);
+            }
 
             // Get assembly file from arguments
             string assemblyFile = args[0];
             if (!File.Exists(assemblyFile))
             {
+                Console.WriteLine($"File not found: {args[0]}");
                 Environment.Exit((int)ExitCodes.FileNotFound);
             }
             

@@ -25,7 +25,7 @@ namespace MiNa.InventorAddInDebugger
             string settingsExe = GetSettingsExe();
             var startInfo = new ProcessStartInfo(settingsExe)
             {
-                Arguments = lastBuild,
+                Arguments = $"\"{lastBuild.Trim("\" ".ToCharArray())}\"",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 StandardOutputEncoding = Encoding.UTF8,
@@ -41,7 +41,8 @@ namespace MiNa.InventorAddInDebugger
             }
 
 
-            if (proc.ExitCode == 0)
+            int procExitCode = proc.ExitCode;
+            if (procExitCode == 0)
             {
                 foreach (string line in sb)
                 {
@@ -51,7 +52,7 @@ namespace MiNa.InventorAddInDebugger
             }
             else
             {
-                MessageBox.Show($"{Resources.Failed}\r\n{string.Join("\r\n", sb)}", Resources.AddIn_DisplayName,
+                MessageBox.Show($"{Resources.Failed} (Exit code: {procExitCode})\r\n{string.Join("\r\n", sb)}", Resources.AddIn_DisplayName,
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
