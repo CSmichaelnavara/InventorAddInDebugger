@@ -2,13 +2,16 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<RootNamespace>MiNa.AddInInfo80</RootNamespace>
+
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +22,8 @@
 		<Folder Include="Properties\" />
 	</ItemGroup>
 
-	<Target Name="Test" AfterTargets="Publish">
+	<Target Name="CopyPublishedFiles" AfterTargets="Publish">
+		<Message Text="CopyPublishedFiles" Importance="high"/>
 		<ItemGroup>
 			<!-- Because this ItemGroup is inside the target, this will enumerate
                  all files just before calling Copy. If the ItemGroup were outside
@@ -30,6 +34,7 @@
 
 		<Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$(SolutionDir)InventorAddInDebugger\bin\Debug\" />
 		<Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$(SolutionDir)InventorAddInDebugger\bin\Release\" />
+		<Message Text="Done" Importance="high"/>
 	</Target>
 
 </Project>
