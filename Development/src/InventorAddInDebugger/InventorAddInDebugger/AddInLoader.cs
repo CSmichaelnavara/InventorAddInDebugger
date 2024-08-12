@@ -22,7 +22,7 @@ namespace MiNa.InventorAddInDebugger
         private Application _inventor;
 
         private ApplicationAddInServer _addInServer;
-        private bool _firstTime;
+        private bool _firstTime = true;
         private bool _isActivated;
 
         /// <summary>
