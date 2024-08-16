@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MiNa.InventorAddInDebugger.Properties;
 
 namespace MiNa.InventorAddInDebugger.UI
 {
@@ -118,6 +119,9 @@ namespace MiNa.InventorAddInDebugger.UI
 
             var loader = new AddInFileInfoLoader();
             var addInInfo = loader.AddInInfo(fd.FileName);
+
+            if (string.IsNullOrEmpty(addInInfo.FullName))
+                MessageBox.Show(Resources.Msg_AddInNotFound, Resources.AddIn_DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             tbAddinClientId.Text = addInInfo.ClientId;
             tbAssemblyFile.Text = addInInfo.FullName;
