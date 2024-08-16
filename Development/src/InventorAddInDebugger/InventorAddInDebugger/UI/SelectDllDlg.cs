@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MiNa.InventorAddInDebugger.Properties;
 
 namespace MiNa.InventorAddInDebugger.UI
 {
@@ -18,6 +12,7 @@ namespace MiNa.InventorAddInDebugger.UI
         public SelectDllDlg()
         {
             InitializeComponent();
+            Icon = Resources.SettingsCmd_Light;
         }
 
         public string[] FoundDlls
