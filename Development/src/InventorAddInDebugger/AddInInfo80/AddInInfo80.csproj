@@ -10,6 +10,8 @@
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<RootNamespace>MiNa.AddInInfo80</RootNamespace>
 
+		<Version>1.0.3.0</Version>
+
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
