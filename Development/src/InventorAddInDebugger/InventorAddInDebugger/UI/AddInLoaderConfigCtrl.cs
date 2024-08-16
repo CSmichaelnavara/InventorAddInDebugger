@@ -104,5 +104,24 @@ namespace MiNa.InventorAddInDebugger.UI
                     break;
             }
         }
+
+        private void btnBrowseAddinFile_Click(object sender, EventArgs e)
+        {
+            var fd = new OpenFileDialog();
+            fd.Filter = ".addin Files|*.addin|All Files|*.*";
+            fd.Title = "Select add-in manifest file";
+
+
+            var dialogResult = fd.ShowDialog(this);
+
+            if (dialogResult != DialogResult.OK) return;
+
+            var loader = new AddInFileInfoLoader();
+            var addInInfo = loader.AddInInfo(fd.FileName);
+
+            tbAddinClientId.Text = addInInfo.ClientId;
+            tbAssemblyFile.Text = addInInfo.FullName;
+            tbFullName.Text = "";
+        }
     }
 }

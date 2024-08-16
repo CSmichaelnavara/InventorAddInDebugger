@@ -138,6 +138,12 @@
     <Compile Include="UI\SelectAddInDlg.Designer.cs">
       <DependentUpon>SelectAddInDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SelectDllDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SelectDllDlg.Designer.cs">
+      <DependentUpon>SelectDllDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingsDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SelectAddInDlg.resx">
       <DependentUpon>SelectAddInDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SelectDllDlg.resx">
+      <DependentUpon>SelectDllDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsDlg.resx">
       <DependentUpon>SettingsDlg.cs</DependentUpon>
