@@ -74,6 +74,15 @@ because it breaks the execution on the line in this command.
 
 ![Settings](Documentation/img/Settings.png)
 
+**Load from** - Allows you to read information from AddIn build or from .addin file and fill the fields below. 
+
+- **NET 48, NET8** - Navigate to the add-in build file. If the DLL file contains at least one add-in implementation, 
+the values are automatically extracted from this file. You can choose from two loaders for specific runtimes.
+- **\*.addin** - Navigate to .addin file related to the addin build. Builds are searched according to value in `<Assembly>` node
+in .addin file. If the relative path in `<Assembly>` node does't point to existing file, all potential files are listed and 
+you must select which one you want to use. Type FullName field is not filled in this case.
+
+
 **Assembly File** - Contains full file name of the original build of the project.
 
 **AddIn ClientId** - Contains GUID of the class which implements `Inventor.ApplicationAddInServer` interface.
@@ -88,9 +97,6 @@ public class StandardAddInServer : Inventor.ApplicationAddInServer
 
 **Type FullName** - Contains full name of the type which implements  `Inventor.ApplicationAddInServer` interface. 
 This value is read-only and is only for information.
-
-**Browse AddIn** - Allows you to navigate to the add-in build file. If the DLL file contains at least one add-in implementation, 
-the values are automatically extracted from this file. You can choose from two loaders for specific runtimes.
 
 **Load on start** - Loads the addin immediately during Inventor start.
 Add-in must be configured before.
@@ -131,6 +137,9 @@ XCopy "$(ProjectDir)Autodesk.InventorAddIn1.Inventor.addin" "%AppData%\Autodesk\
 ```
 
 If you use another method for loading, disable them too. The easiest way is to delete or change extension of the `*.addin` file.
+
+>NOTE: Disable the addin in AddIn Manager is sufficient, 
+>but it can cause an issue because the addin can be loaded for some reason.
 
 ## Set automatic versioning
 In *Project settings* set assembly version to auto increment.
