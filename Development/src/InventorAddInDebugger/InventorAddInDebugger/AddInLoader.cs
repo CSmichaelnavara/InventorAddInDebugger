@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -177,7 +178,7 @@ namespace MiNa.InventorAddInDebugger
 
             _referencesLoader.LastBuildFolder = Path.GetDirectoryName(lastBuild);
 
-            var firstOrDefault = GetAddInsFromAssembly(lastBuild).FirstOrDefault(x => x.ClientId == AddInClientId);
+            var firstOrDefault = GetAddInsFromAssembly(lastBuild).FirstOrDefault(x => x.ClientId.Equals(AddInClientId, StringComparison.InvariantCultureIgnoreCase));
             if (firstOrDefault == null)
                 return null;
 
