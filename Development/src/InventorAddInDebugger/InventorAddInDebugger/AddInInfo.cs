@@ -5,6 +5,10 @@
     /// </summary>
     public class AddInInfo
     {
+        public AddInInfo() : this("", "")
+        {
+
+        }
         /// <summary>
         /// Creates new instance of AddInInfo
         /// </summary>
@@ -26,4 +30,10 @@
         /// </summary>
         public string FullName { get; set; }
     }
+
+    public static class AddInInfoExtension
+    {
+        public static string DisplayName(this AddInInfo addInInfo) => addInInfo.FullName.Substring(10);
+    }
 }
+

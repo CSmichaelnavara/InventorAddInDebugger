@@ -8,6 +8,7 @@ namespace MiNa.InventorAddInDebugger.UI
     {
         private AddInLoaderConfig _config = new AddInLoaderConfig();
         private AddInLoaderConfigManager loader = new AddInLoaderConfigManager();
+        //private MruAssemblies _mruFiles;
 
         public SettingsDlg()
         {
@@ -20,6 +21,16 @@ namespace MiNa.InventorAddInDebugger.UI
 
             this.Icon = Resources.SettingsCmd_Light;
         }
+
+        //public MruAssemblies MruFiles
+        //{
+        //    get => _mruFiles;
+        //    set
+        //    {
+        //        _mruFiles = value;
+        //        addInLoaderConfigCtrl1.MruFiles = value;
+        //    }
+        //}
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

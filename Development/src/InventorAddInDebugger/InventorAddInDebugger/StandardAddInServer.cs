@@ -218,7 +218,6 @@ namespace MiNa.InventorAddInDebugger
             _configMgr = new AddInLoaderConfigManager();
             _configMgr.Load(Config);
 
-
             _addInLoader = new AddInLoader(addInSiteObject);
 
 

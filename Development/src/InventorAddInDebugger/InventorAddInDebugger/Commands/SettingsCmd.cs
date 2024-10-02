@@ -21,8 +21,10 @@ namespace MiNa.InventorAddInDebugger.Commands
         {
             var settingsDlg = new SettingsDlg();
             var dialogResult = settingsDlg.ShowDialog(InventorMainWindow);
-            if(dialogResult == DialogResult.OK)
+            if (dialogResult == DialogResult.OK)
+            {
                 _configManager.Load(Config);
+            }
 
             //string settingsExe = Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             //    "InventorAddInDebuggerConfig.exe");

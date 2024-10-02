@@ -1,4 +1,6 @@
-﻿namespace MiNa.InventorAddInDebugger
+﻿using System.Collections.Generic;
+
+namespace MiNa.InventorAddInDebugger
 {
 
     /// <summary>
@@ -25,5 +27,7 @@
         /// Loads debugged AddIn when inventor starts
         /// </summary>
         public bool LoadOnStart { get; set; }
+
+        public List<AddInInfo> MruAddInInfos { get; set; } = new List<AddInInfo>();
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MiNa.InventorAddInDebugger.Properties;
+using Environment = System.Environment;
+using Path = System.IO.Path;
 
 namespace MiNa.InventorAddInDebugger.UI
 {
@@ -54,6 +57,7 @@ namespace MiNa.InventorAddInDebugger.UI
             tbAddinClientId.Text = _config.AddInClientId;
             tbFullName.Text = _config.AddInFullName;
             cbLoadOnStart.Checked = _config.LoadOnStart;
+            cmbRecent.Items.AddRange(_config.MruAddInInfos.ConvertAll(x => new AddInInfoComboItem(x)).ToArray());
         }
 
         private void ControlsToConfig()
@@ -121,11 +125,59 @@ namespace MiNa.InventorAddInDebugger.UI
             var addInInfo = loader.AddInInfo(fd.FileName);
 
             if (string.IsNullOrEmpty(addInInfo.FullName))
-                MessageBox.Show(Resources.Msg_AddInNotFound, Resources.AddIn_DisplayName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.Msg_AddInNotFound, Resources.AddIn_DisplayName, MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
 
             tbAddinClientId.Text = addInInfo.ClientId;
             tbAssemblyFile.Text = addInInfo.FullName;
             tbFullName.Text = "";
+
+            UpdateMruAddInInfos(addInInfo);
+        }
+
+        private void UpdateMruAddInInfos(AddInInfo addInInfo)
+        {
+            Config.MruAddInInfos.RemoveAll(x =>
+                x.FullName.Equals(addInInfo.FullName, StringComparison.InvariantCultureIgnoreCase) &&
+                x.ClientId.Equals(addInInfo.ClientId, StringComparison.InvariantCultureIgnoreCase));
+            Config.MruAddInInfos.Insert(0, addInInfo);
+        }
+
+        private void cmbRecent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var addInInfo = cmbRecent.SelectedItem as AddInInfo;
+            if (addInInfo == null) return;
+            tbAddinClientId.Text = addInInfo.ClientId;
+            tbAssemblyFile.Text = addInInfo.FullName;
+        }
+
+
+        private class AddInInfoComboItem : AddInInfo
+        {
+            public AddInInfoComboItem(AddInInfo addInInfo) : base(addInInfo.FullName, addInInfo.ClientId)
+            {
+            }
+
+            public override string ToString()
+            {
+                if (FullName.Length < 75) return FullName;
+
+                string[] strings = FullName.Split(Path.DirectorySeparatorChar);
+                int pathLength = 0;
+                var parts = new List<string>();
+                for (int i = strings.Length - 1; i >= 0; i--)
+                {
+                    string part = strings[i];
+                    pathLength += part.Length;
+                    parts.Add(part);
+                    if (pathLength >= 50) break;
+                }
+
+                parts.Add(Path.GetPathRoot(FullName) + "...");
+
+                parts.Reverse();
+                return string.Join(Path.DirectorySeparatorChar.ToString(), parts);
+            }
         }
     }
 }
