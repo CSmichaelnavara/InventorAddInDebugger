@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using Inventor;
 using MiNa.InventorAddInDebugger.Common;
+using MiNa.InventorAddInDebugger.Loader;
 using MiNa.InventorAddInDebugger.Properties;
 using Application = Inventor.Application;
 
@@ -8,9 +9,9 @@ namespace MiNa.InventorAddInDebugger.Commands
 {
     class ReloadAddInCmd : Command
     {
-        private readonly AddInLoader _addInLoader;
+        private readonly IAddInLoader _addInLoader;
 
-        public ReloadAddInCmd(Application inventor, AddInLoader addInLoader) : base(inventor)
+        public ReloadAddInCmd(Application inventor, IAddInLoader addInLoader) : base(inventor)
         {
             this._addInLoader = addInLoader;
         }

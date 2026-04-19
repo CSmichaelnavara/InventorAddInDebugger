@@ -11,19 +11,18 @@ using MiNa.InventorAddInDebugger.Properties;
 using File = System.IO.File;
 using Path = System.IO.Path;
 
-namespace MiNa.InventorAddInDebugger
+namespace MiNa.InventorAddInDebugger.Loader
 {
     /// <summary>
     /// Provides functionality for loading AddIns
     /// </summary>
-    internal class AddInLoader
+    internal class AddInLoader : IAddInLoader
     {
         private readonly ApplicationAddInSite _addInSiteObject;
-        private readonly ReferencesLoader _referencesLoader;
-        private Application _inventor;
+        private readonly Application _inventor;
 
         private ApplicationAddInServer _addInServer;
-        private bool _firstTime = true;
+        private readonly bool _firstTime = true;
         private bool _isActivated;
 
         /// <summary>
@@ -34,7 +33,6 @@ namespace MiNa.InventorAddInDebugger
         {
             _addInSiteObject = addInSiteObject;
             _inventor = addInSiteObject.Application;
-            _referencesLoader = new ReferencesLoader();
         }
 
         /// <summary>
@@ -66,7 +64,7 @@ namespace MiNa.InventorAddInDebugger
             }
 
             if (_addInServer == null)
-                _addInServer = GetStandardAddInServer();
+                _addInServer = GetApplicationAddInServer();
 
             if (_addInServer == null)
             {
@@ -133,10 +131,10 @@ namespace MiNa.InventorAddInDebugger
         }
 
 
-        private List<AddInInfo> GetAddInsFromAssembly(string lastBuild)
+        private List<AddInInfo> GetAddInsFromAssembly(Assembly addInAssembly)
         {
             var addIns = new List<AddInInfo>();
-            var addInAssembly = Assembly.LoadFile(lastBuild);
+            //var addInAssembly = Assembly.LoadFile(lastBuild);
             foreach (var definedType in addInAssembly.DefinedTypes)
             {
                 // Type must implement Inventor.ApplicationAddInServer
@@ -167,7 +165,7 @@ namespace MiNa.InventorAddInDebugger
         ///     AddInAssemblyFile and AddInClientId
         /// </summary>
         /// <returns></returns>
-        private ApplicationAddInServer GetStandardAddInServer()
+        private ApplicationAddInServer GetApplicationAddInServer()
         {
             if (string.IsNullOrWhiteSpace(AddInAssemblyFile))
                 return null;
@@ -176,15 +174,15 @@ namespace MiNa.InventorAddInDebugger
             var lastBuild = SearchLastBuild(buildDir,
                 Path.GetFileName(AddInAssemblyFile));
 
-            _referencesLoader.LastBuildFolder = Path.GetDirectoryName(lastBuild);
+            var pluginLoadContext = new AddInLoadContext(lastBuild);
+            var lastBuildAssembly = pluginLoadContext.LoadFromAssemblyName(AssemblyName.GetAssemblyName(lastBuild));
 
-            var firstOrDefault = GetAddInsFromAssembly(lastBuild).FirstOrDefault(x => x.ClientId.Equals(AddInClientId, StringComparison.InvariantCultureIgnoreCase));
-            if (firstOrDefault == null)
+            var addInInfo = GetAddInsFromAssembly(lastBuildAssembly).FirstOrDefault(x => x.ClientId.Equals(AddInClientId, StringComparison.InvariantCultureIgnoreCase));
+            if (addInInfo == null)
                 return null;
 
-            var addInAssembly = Assembly.LoadFile(lastBuild);
-            var applicationAddInServer =
-                addInAssembly.CreateInstance(firstOrDefault.FullName) as ApplicationAddInServer;
+            //var addInAssembly = Assembly.LoadFile(lastBuild);
+            var applicationAddInServer = lastBuildAssembly.CreateInstance(addInInfo.FullName) as ApplicationAddInServer;
 
             LastVersionFile = lastBuild;
             return applicationAddInServer;

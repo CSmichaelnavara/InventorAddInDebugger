@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace MiNa.InventorAddInDebugger
+namespace MiNa.InventorAddInDebugger.Loader
 {
     /// <summary>
     /// Provides functionality for load and save configuration

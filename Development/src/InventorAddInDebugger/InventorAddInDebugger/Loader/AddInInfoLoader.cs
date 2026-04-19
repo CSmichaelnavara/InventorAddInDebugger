@@ -9,7 +9,7 @@ using System.Xml;
 using MiNa.InventorAddInDebugger.Properties;
 using MiNa.InventorAddInDebugger.UI;
 
-namespace MiNa.InventorAddInDebugger
+namespace MiNa.InventorAddInDebugger.Loader
 {
     class AddInInfoLoader
     {
@@ -64,7 +64,7 @@ namespace MiNa.InventorAddInDebugger
 
         private string GetSettingsExe()
         {
-            return Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 _addInInfoExe);
         }
     }

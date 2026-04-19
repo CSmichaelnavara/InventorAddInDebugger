@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<PlatformTarget>x64</PlatformTarget>
 		<RootNamespace>MiNa.InventorAddInDebugger</RootNamespace>
 	</PropertyGroup>

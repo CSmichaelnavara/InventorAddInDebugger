@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MiNa.InventorAddInDebugger.Loader;
 using MiNa.InventorAddInDebugger.Properties;
 
 namespace MiNa.InventorAddInDebugger.UI

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MiNa.InventorAddInDebugger
+namespace MiNa.InventorAddInDebugger.Loader
 {
 
     /// <summary>

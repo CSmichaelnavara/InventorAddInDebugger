@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using MiNa.InventorAddInDebugger.Loader;
 using MiNa.InventorAddInDebugger.Properties;
 using Environment = System.Environment;
 using Path = System.IO.Path;
@@ -10,13 +11,10 @@ namespace MiNa.InventorAddInDebugger.UI
     public partial class AddInLoaderConfigCtrl : UserControl
     {
         private AddInLoaderConfig _config;
-        private ReferencesLoader _referencesLoader;
 
         public AddInLoaderConfigCtrl()
         {
             InitializeComponent();
-
-            _referencesLoader = new ReferencesLoader();
         }
 
         public AddInLoaderConfig Config

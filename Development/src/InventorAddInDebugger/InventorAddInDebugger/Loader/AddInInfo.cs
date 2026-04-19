@@ -1,4 +1,4 @@
-﻿namespace MiNa.InventorAddInDebugger
+﻿namespace MiNa.InventorAddInDebugger.Loader
 {
     /// <summary>
     /// Provides information about add-in in assembly

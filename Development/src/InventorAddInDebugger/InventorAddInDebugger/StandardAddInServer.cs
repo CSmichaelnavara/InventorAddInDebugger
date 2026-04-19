@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Inventor;
 using MiNa.InventorAddInDebugger.Commands;
 using MiNa.InventorAddInDebugger.Common;
+using MiNa.InventorAddInDebugger.Loader;
 using MiNa.InventorAddInDebugger.Properties;
 using Command = MiNa.InventorAddInDebugger.Commands.Command;
 
@@ -26,7 +27,7 @@ namespace MiNa.InventorAddInDebugger
 
         private ActivateAddInCmd _activateAddInCmd;
 
-        private AddInLoader _addInLoader;
+        private IAddInLoader _addInLoader;
         private AddInLoaderConfigManager _configMgr;
 
         // Inventor application object.
